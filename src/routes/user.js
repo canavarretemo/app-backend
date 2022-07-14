@@ -30,27 +30,16 @@ router.get('/users', async(request, response) => {
 } )
 
 //get a user
-router.get('users/:id', (request, response) => {
-
-    const id = request.params.id
-
-     User.findById(id)
-     .then(user => {response.json(user)})
-     .catch( error => {response.json({message: error}) })
-
-
-    try {
-    
-        response.json(user)
-
-    } catch (error) {
-        response.json(user)
-    }
-
+router.get('/users/:id', (request, response) => {
 
     
+    const { id } = request.params
+    console.log(id);
 
-    
+     User
+     .findById(id)
+     .then(user => response.json(user))
+     .catch( error => response.json({message: error}))
 
 })
 
@@ -62,11 +51,9 @@ router.put('/users/:id',  (request, response) => {
 
     User
     .updateOne({_id: id}, { $set: {name, age, email}   })
-    .then(user => {response.json(user)})
+    .then(result => {response.json(result)})
     .catch(error => {response.json({message: error}) })
 
-    console.log(id, name, age, email);
-    response.send('hola')
 
 })
 
@@ -78,7 +65,7 @@ router.delete('/users/:id', (request, response) => {
 
     User
     .remove( {_id : id }  )
-    then(result => {response.json(result)})
+    .then(result => {response.json(result)})
      .catch( error => {response.json({message: error}) })
 
 })
